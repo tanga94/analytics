@@ -48,6 +48,11 @@
   </url>
   
   <url>
+    <loc>/author/</loc>
+    <lastmod>2019-09-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/publication-type/3/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
   </url>
@@ -59,11 +64,6 @@
   
   <url>
     <loc>/authors/</loc>
-    <lastmod>2019-09-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/author/nelson-bighetti/</loc>
     <lastmod>2019-09-05T00:00:00+00:00</lastmod>
   </url>
   
