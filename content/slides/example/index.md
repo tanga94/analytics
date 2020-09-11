@@ -1,16 +1,13 @@
 ---
-title: Slides
-summary: An introduction to using Academic's Slides feature.
 authors: []
-tags: []
 categories: []
 date: "2019-02-05T00:00:00Z"
 slides:
-  # Choose a theme from https://github.com/hakimel/reveal.js#theming
-  theme: black
-  # Choose a code highlighting style (if highlighting enabled in `params.toml`)
-  #   Light style: github. Dark style: dracula (default).
   highlight_style: dracula
+  theme: black
+summary: An introduction to using Academic's Slides feature.
+tags: []
+title: Slides
 ---
 
 # Create slides in Markdown with Academic
@@ -129,14 +126,14 @@ Press the `S` key to view the speaker notes!
 
 ---
 
-{{< slide background-image="/media/boards.jpg" >}}
+{{< slide background-image="/img/boards.jpg" >}}
 
 ## Custom Slide
 
 Customize the slide style and background
 
 ```markdown
-{{</* slide background-image="/media/boards.jpg" */>}}
+{{</* slide background-image="/img/boards.jpg" */>}}
 {{</* slide background-color="#0000FF" */>}}
 {{</* slide class="my-style" */>}}
 ```

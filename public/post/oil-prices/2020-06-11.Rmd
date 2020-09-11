@@ -1,0 +1,98 @@
+---
+title: "Do global oil price movements offer insight into the performance of the South African Rand?"
+author: "Tangeni Shatiwa"
+date: 2020-06-11T21:13:14-05:00
+tags: ["South African Rand", "Brent Crude Oil", "Global Uncertainty","Non-Linear Spline Regression"]
+header:
+  caption: 'Image Credit: [**Biznews**]( https://www.biznews.com/sponsored/2020/05/04/sa-exchange-rate-better-time-invest)'
+  image: 'headers/featured.jpg'
+  focal_point: ""
+  preview_only: false
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE,collapse = TRUE)
+```
+
+<style>
+body {
+text-align: justify}
+</style>
+
+*For much of the past decade, the South African Rand has been regarded to be amongst the most volatile currencies in the world. However, nothing from the past 10 years could have prepared Rand investors for the set of unprecedented events which 2020 has brought so far. Essentially, the South African economy has been hit by a perfect storm following a series of sovereign credit rating downgrades in April by Moody's and S&P, compounded even further by the COVID-19 pandemic. This resulted in a huge Rand sell-off equating to roughly 28% against the dollar between January and April 2020, as the USD-ZAR exchange rate reached an all time low of R19.35. Since then, the Rand has partially clawed back from this slump as the world begins to re-emerge from national lockdowns imposed to curb the spread of the pandemic.* 
+
+*Given South Africa's exposure to oil prices (particularly with Brent crude oil being priced in dollars), directional movements of oil prices can be an extremely useful tool in analyzing the USD-ZAR exchange rate. Oil-Rand analyses hold merit on the premise that oil price movements offer a snapshot of the global dynamics which the Rand is also exposed to.* 
+
+## The dynamics of oil prices as a measure for Rand performance
+In theory, lower global oil prices are supposed to have a positive effect on the Rand (through an improved trade balance), given that South Africa imports its oil. Although it is plausible that this relationship exists when taking a long-term view on the South African economy, it is interesting to find that the exact opposite effect tends to persist through the short-run. Rand weakening tends to coincide with periods in which global oil prices are on the decline, and vice versa.  
+
+There are several reasons which explain why the abovementioned phenomenon exists. Firstly, the value of both of these commodities are likely to fall simultaneously during periods of global risk aversion, as investors ditch risky assets in favor of safe-haven ones (such as the USD). Secondly, lower global oil prices could be a reflection that global growth (and commodity prices in a broad sense) are on the decline, which would adversely impact the value of commodity-linked currencies (the Rand in this case). Lastly, because global oil prices are denominated in USD, declining oil prices in dollar terms would indicate that the greenback currency has strengthened, which by symmetry implies a weakened Rand.
+
+These sentiments are supported by trends identified in Figure \@ref(fig:scatter).
+By analyzing this figure, we can see that a stronger Rand (i.e a lower USD-ZAR exchange rate) is more likely to occur during times in which oil prices trade at higher levels. Extending on this, lower oil prices (and a weaker Rand) generally coincide with periods of high market uncertainty. In order to quantify these periods of high uncertainty, one can use the CBOE Volatility Index (VIX).^[The CBOE VIX measures the market's expectation of 30-day forward-looking volatility on S&P 500 Options. This index is commonly used in financial analysis as a proxy for global market uncertainty.] Here, it is evident that higher levels of market volatility (illustrated by the darker observations from the distribution of outcomes in Figure \@ref(fig:scatter)) are concentrated at points below the USD40 per barrel mark. Furthermore, the trend line in Figure \@ref(fig:scatter) clearly indicates that there is a non-linear relationship between the oil price and the Rand. This means that the further the oil price declines, the sharper the depreciation in the Rand would be (i.e depreciating at an increasing rate). This is exactly what we have seen between February and April, which underpins just how important risk sentiment is when predicting the path for a commodity-linked currency such as the Rand.
+
+```{r scatter, fig.cap='Weekly data downloaded from Yahoo Finance (Jan 2015-June 2020).', tidy=FALSE}
+library(rmsfuns)
+library(knitr)
+packages <- c('tidyquant','PerformanceAnalytics','PortfolioAnalytics','tidyr',
+              'dplyr','lubridate','tbl2xts', 'ggplot2','plotly','ggthemes','readxl', 'ISLR','ggrepel','mgcv','ggpmisc')
+
+load_pkg(packages)
+data <- read_excel(path = "C:/Users/user/Documents/latest website/website/SA_dataset.xlsx", col_names = T)
+
+data <- data %>% mutate(Date = as.Date(Date))
+
+
+my.formula <-  y~splines::bs(x, 3)
+p1 <- ggplot(data, aes(x=Oil,y = ZAR)) +
+  geom_point(aes(col = VIX),size = 2, alpha = 2) +
+  scale_color_continuous(low = '#fb9d9d', high = '#4f042e') +
+  geom_smooth(aes(group=1),method ='lm',formula = my.formula,se=FALSE,,color='#56242e', linetype = 'dashed', size = 1.5) +
+  labs(title = 'USD-ZAR Exchange Rate vs Crude Oil Prices', subtitle = 'Higher oil prices tend to coincide with a stronger Rand',
+       x = 'Spot Brent Crude, USD per barrel', y= 'USD-ZAR', caption = 'Data downloaded from Yahoo Finance') +
+  theme_light() +
+  stat_poly_eq(formula = my.formula, 
+               aes(label = stat(adj.rr.label)), 
+               parse = TRUE, label.x = 'middle', label.y ='middle')
+
+
+p2 <- ggplotly(p1)
+
+
+p3 <- ggplotly(p2) %>% 
+  layout(title = list(text = paste0('USD-ZAR Exchange Rate vs Brent Crude Oil Prices',
+                                    '<br>',
+                                    '<sup>',
+                                    'A Stronger Rand tends to coincide with higher oil prices (and lower global uncertainty) ',
+                                    '</sup>')))
+
+p3 %>% 
+  add_annotations(
+    x = 80,
+    y = mean(p3$x$layout$yaxis$range),
+    text = TeX("R^{2}_{adj} = 0.61"),
+    showarrow = F
+  ) %>% 
+  config(mathjax = 'cdn')
+```
+
+
+
+
+
+## This model suggests that given current oil price levels, the Rand is undervalued
+
+As of the 10^th^ of June, Brent crude oil and the Rand were trading at actual levels of around USD38 per barrel and R16.50 (against the USD) respectively. We can derive an implied value for the Rand by analyzing the non-linear trend line in Figure \@ref(fig:scatter). With this, a USD38 price level for a barrel of crude oil implies that the Rand should be trading closer to R15.50, which suggests that the Rand is undervalued at the moment. This is encouraging - an undervalued view on the Rand could bode well for its outlook over the near-to-mid term, as foreign and local investors continue their search for high-yield investment opportunities. This bullish view on the local currency is supported further by the following considerations
+
+- A recovery in oil prices following the unprecedented sell-offs between February and April. This is set to be fuelled by 1) an improvement in global oil demand as countries transition out of periods of lockdown,
+as well as 2) supply-side stimulus effects on the back of the historic OPEC+ agreement reached in early April. 
+- A low/zero interest rate environment throughout Europe and the US, which has recently resulted in investors being squeezed towards buying riskier assets (such as the Rand).
+- South African bond liquidations have eased in recent weeks when contrasted with the rapid rate at which investors were dumping these bonds in the build-up to Moody's sovereign credit rating decision in April.
+- A bullish view on gold prices should provide some relief for South Africa's exports and trade balance, which would theoretically boost the Rand (South Africa is a major gold producer).
+
+Of course, there are notable downside risks which oil prices and emerging market currencies are faced with in the current economic landscape. For one, a second wave of the COVID-19 pandemic in countries that have managed to slow the initial transmission of the virus could re-trigger a spike in market uncertainty, similar to what we experienced earlier this year. Also, an escalation in market uncertainty could be exacerbated by heightened trade tensions between the US and China, which would force investors to be bearish towards the Rand. Lastly, it is no secret that South African economic prospects continue to be hampered by poor growth levels and a deterioration in public debt, which can be expected to translate into adverse outcomes for the Rand.
+Therefore, it remains to be seen whether these headwinds will outweigh the prospects for a further recovery in the Rand over the next few months. Without a shadow of a doubt, investors and the general South African public will be monitoring these developments rather closely over the near future.
+
+
+
