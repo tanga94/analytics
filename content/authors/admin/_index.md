@@ -1,79 +1,56 @@
 ---
-# Display name
-title: Nelson Bighetti
-
-# Is this the primary user of the site?
-superuser: true
-
-# Role/position/tagline
-role: Professor of Artificial Intelligence
-
-# Organizations/Affiliations to show in About widget
-organizations:
-- name: Stanford University
-  url: https://www.stanford.edu/
-
-# Short bio (displayed in user profile at end of posts)
-bio: My research interests include distributed robotics, mobile computing and programmable matter.
-
-# Interests to show in About widget
-interests:
-- Artificial Intelligence
-- Computational Linguistics
-- Information Retrieval
-
-# Education to show in About widget
+authors:
+- admin
+bio: My research interests include Financial Markets, Quantitative Finance and Macroeconomics
 education:
   courses:
-  - course: PhD in Artificial Intelligence
-    institution: Stanford University
-    year: 2012
-  - course: MEng in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2009
-  - course: BSc in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2008
+  - course: CFA Level 1 (Ongoing)
+    institution: CFA Institute
+    year: 2020
+  - course: Masters Degree, Financial Economics
+    institution: Stellenbosch University (South Africa)
+    year: 2019
+  - course: Bachelors Degree (Hons), Finance and Economics
+    institution: Stellenbosch University (South Africa)
+    year: 2017
+email: "tangenishatiwa1994@gmail.com"
+Career interests:
+- Financial Markets (Fixed Income, Equities, Commodities and FX)
+- Macroeconomics (International Spillovers, Capital Flows, Monetary policy, Financial stability)
+- Quantitative Finance (Portfolio Construction and Optimisation, asset correlation and risk models)
+Hobbies:
+- Sport
+- Winetasting
+- Travel
 
-# Social/Academic Networking
-# For available icons, see: https://sourcethemes.com/academic/docs/page-builder/#icons
-#   For an email link, use "fas" icon pack, "envelope" icon, and a link in the
-#   form "mailto:your-email@example.com" or "/#contact" for contact widget.
+name: Tangeni Shatiwa
+organizations:
+- name: Central Bank of Namibia
+  url: ""
+role: Economic Analyst - Macroeconomic Modelling and Forecasting
 social:
 - icon: envelope
   icon_pack: fas
-  link: '/#contact'
-- icon: twitter
+  link: '#contact'
+- icon: instagram
   icon_pack: fab
-  link: https://twitter.com/GeorgeCushen
-- icon: graduation-cap  # OR `google-scholar`
-  icon_pack: fas  # OR `ai`
-  link: https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ
-- icon: github
+  link: '#contact'
+- icon: facebook
   icon_pack: fab
-  link: https://github.com/gcushen
+  link: https://www.facebook.com/tanga.shatiwa
 - icon: linkedin
   icon_pack: fab
-  link: https://www.linkedin.com/
-
-# Link to a PDF of your resume/CV.
-# To use: copy your resume to `static/media/resume.pdf`, enable `ai` icons in `params.toml`, 
-# and uncomment the lines below.
-# - icon: cv
-#   icon_pack: ai
-#   link: media/resume.pdf
-
-# Email for Contact widget or Gravatar
-email: ""
-
-# Organizational groups that you belong to (for People widget)
-#   Remove this if you are not using the People widget.
+  link: https://www.linkedin.com/in/tangeni-shatiwa-516040150/
+- icon: github
+  icon_pack: fab
+  link: https://github.com/tanga94
+- icon: cv
+  icon_pack: ai
+  link: https://drive.google.com/file/d/1v3gsC8G4fmGUpfYHDDDGJZNYv7ovLlWo/view?usp=sharing
+superuser: true
 user_groups:
-- Principal Investigators
+- Researchers
+- Visitors
 ---
 
-Nelson Bighetti is a professor of artificial intelligence at the Stanford AI Lab. His research interests include distributed robotics, mobile computing and programmable matter. He leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
-
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "media/demo_resume.pdf" "newtab" >}}resumé{{< /staticref >}}.
+I am a passionate Analyst with an out-of-the-box mindset and hunger for growth. My career interests and experience are primarily focused on macroeconomics, corporate finance, quantitative finance and financial research. I am committed to unlocking as much value as possible across emerging markets and developing markets in Africa. I'm also an avid fan of sports, socializing and travel in my spare time.
