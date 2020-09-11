@@ -3,12 +3,10 @@ title: "Did the South African economy really contract by 51%?"
 author: "Tangeni Shatiwa"
 date: 2020-09-10T21:13:14-05:00
 tags: ["Gross Domestic Product", "Industrial Production", "South Africa"]
-header:
-  caption: 'Image Credit: [**AvaTrade**](https://www.avatrade.com/education/trading-for-beginners/gross-domestic-product)'
-  image: '/img/gdp.jpg'
-  focal_point: ""
-  preview_only: false
 output: html_document
+header:
+  image: "gdp.png"
+  caption: "Image credit: [**AvaTrade**](https://github.com/gcushen/hugo-academic/)"
 ---
 
 ```{r setup, include=FALSE}
@@ -126,7 +124,3 @@ p1 %>% ggplotly() %>%
 Purely on the premise that the economy will be coming off the low base created by the destructive events during the second quarter, it is only practical to expect further (though limited) improvement in production over the next few months as lockdown measures are eased. The unfortunate part about this is that the media's reaction once the next quarter's figures are released in a few months will most likely be as overblown as what we saw earlier this week. We can expect a sharp rise in annualised growth at the end of Q3 due to this "low base effect" from Q2, which will create the false impression that South Africa's economic renaissance has taken full effect.
 
 Right now, the economy is going through extreme short-term changes. This doesn't mean that the scars from the lockdown period won't remain for years to come - consumption and investment will take some time to fully normalise, and it is unlikely that the job losses induced by the pandemic will be reversed anytime soon either. Additionally, high levels of government debt coupled with depleted tax revenues have left fiscal policymakers with limited buffers to cushion the effects of the shock. With that being said, it makes little sense to suggest that the remainder of the year will resemble anything similar to the unprecedented troughs experienced in Q2. If you share the same sentiment, then you shouldn't focus too much on annualised growth rates this year.
-
-
-
-

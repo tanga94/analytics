@@ -3,14 +3,11 @@ title: "Do global oil price movements offer insight into the performance of the 
 author: "Tangeni Shatiwa"
 date: 2020-06-11T21:13:14-05:00
 tags: ["South African Rand", "Brent Crude Oil", "Global Uncertainty","Non-Linear Spline Regression"]
+output: html_document
 header:
-  caption: 'Image Credit: [**Biznews**]( https://www.biznews.com/sponsored/2020/05/04/sa-exchange-rate-better-time-invest)'
-  image: 'headers/featured.jpg'
-  focal_point: ""
-  preview_only: false
-output: 
-  html_document:
-    css: styles.css
+  image: "featured.jpg"
+  focal_point: "Center"
+  caption: "Image credit: [**Biznews**](https://www.biznews.com/sponsored/2020/05/04/sa-exchange-rate-better-time-invest)"
 ---
 
 ```{r setup, include=FALSE}
