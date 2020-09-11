@@ -1,7 +1,7 @@
 ---
 title: "Did the South African economy really contract by 51%?"
 author: "Tangeni Shatiwa"
-date: 2020-09-10T21:13:14-05:00
+date: 2020-09-11T21:13:14-05:00
 tags: ["Gross Domestic Product", "Industrial Production", "South Africa"]
 header:
   caption: 'Image Credit: [**AvaTrade**](https://www.avatrade.com/education/trading-for-beginners/gross-domestic-product)'
