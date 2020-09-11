@@ -18,34 +18,43 @@ subtitle = ""
   icon = "r-project"
   icon_pack = "fab"
   name = "R"
-  description = "90%"
+  description = "Proficient"
   
 [[feature]]
   icon = "chart-line"
   icon_pack = "fas"
-  name = "Statistics"
-  description = "100%"  
+  name = "Statistics and Forecasting"
+  description = "Proficient"  
   
 [[feature]]
-  icon = "camera-retro"
+  icon = "dollar-sign"
   icon_pack = "fas"
-  name = "Photography"
-  description = "10%"
+  name = "Financial Modelling"
+  description = "Proficient"
+  
+ [[feature]]
+  icon = "search"
+  icon_pack = "fas"
+  name = "Research"
+  description = "Expert"
+  
+ [[feature]]
+  icon = "file-excel"
+  icon_pack = "far"
+  name = "Excel(Including Macros)"
+  description = "Proficient" 
+  
+ [[feature]]
+  icon = "superscript"
+  icon_pack = "fas"
+  name = "Quantitative Finance"
+  description = "Proficient" 
+  
+ [[feature]]
+  icon = "chart-pie"
+  icon_pack = "fas"
+  name = "Data Visualisation"
+  description = "Expert" 
 
-# Uncomment to use emoji icons.
-# [[feature]]
-#  icon = ":smile:"
-#  icon_pack = "emoji"
-#  name = "Emojiness"
-#  description = "100%"  
-
-# Uncomment to use custom SVG icons.
-# Place custom SVG icon in `assets/images/icon-pack/`, creating folders if necessary.
-# Reference the SVG icon name (without `.svg` extension) in the `icon` field.
-# [[feature]]
-#  icon = "your-custom-icon-name"
-#  icon_pack = "custom"
-#  name = "Surfing"
-#  description = "90%"
 
 +++
