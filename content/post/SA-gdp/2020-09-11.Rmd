@@ -3,11 +3,12 @@ title: "Did the South African economy really contract by 51%?"
 author: "Tangeni Shatiwa"
 date: 2020-09-10T21:13:14-05:00
 tags: ["Gross Domestic Product", "Industrial Production", "South Africa"]
+header:
+  caption: 'Image Credit: [**AvaTrade**](https://www.avatrade.com/education/trading-for-beginners/gross-domestic-product)'
+  image: '/img/gdp.jpg'
+  focal_point: ""
+  preview_only: false
 output: html_document
-image:
-  caption: "Oil can"
-  focal_point: "Center"
-  alt_text: This is a picture of oil can.
 ---
 
 ```{r setup, include=FALSE}
@@ -17,7 +18,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE,collapse = 
 
 **Disclaimer - The opinions expressed here are solely my own and do not reflect the views of anyone else.**
 
-*The build up to the latest release of South Africa's quarterly GDP figures was captivating to say the least, as analysts awaited eagerly to confirm their projections on just how bad the second quarter (Q2) was set to turn out. The catastrophic economic performance recorded over Q2 was largely in line with most expectations, but by all means still managed to dominate headlines across the country. Stats SA indicated that an economic contraction of 51% was recorded over Q2 of this year - but does this really mean that half of South Africa's GDP was wiped out in as little as three months? This article offers some insight into why this number might mislead you to think so.* 
+*The build up to the latest South African quarterly GDP release was captivating to say the least, as analysts awaited eagerly to confirm their projections on just how bad the second quarter (Q2) was set to turn out. The catastrophic economic performance recorded over Q2 was largely in line with most expectations, but by all means still managed to dominate headlines across the country. Stats SA indicated that an economic contraction of 51% was recorded over Q2 of this year - but does this really mean that half of South Africa's GDP was wiped out in as little as three months? This article offers some insight into why this number might mislead you to think so.* 
 
 ## What is the difference between annual and annualised growth rates?
 
