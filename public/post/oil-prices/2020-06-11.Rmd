@@ -8,17 +8,14 @@ header:
   image: 'headers/featured.jpg'
   focal_point: ""
   preview_only: false
-output: html_document
+output: 
+  html_document:
+    css: styles.css
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE,collapse = TRUE)
 ```
-
-<style>
-body {
-text-align: justify}
-</style>
 
 *For much of the past decade, the South African Rand has been regarded to be amongst the most volatile currencies in the world. However, nothing from the past 10 years could have prepared Rand investors for the set of unprecedented events which 2020 has brought so far. Essentially, the South African economy has been hit by a perfect storm following a series of sovereign credit rating downgrades in April by Moody's and S&P, compounded even further by the COVID-19 pandemic. This resulted in a huge Rand sell-off equating to roughly 28% against the dollar between January and April 2020, as the USD-ZAR exchange rate reached an all time low of R19.35. Since then, the Rand has partially clawed back from this slump as the world begins to re-emerge from national lockdowns imposed to curb the spread of the pandemic.* 
 

@@ -8,17 +8,15 @@ header:
   image: 'headers/gdp.jpg'
   focal_point: ""
   preview_only: false
-output: html_document
+output: 
+  html_document:
+    css: styles.css
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE,collapse = TRUE)
 ```
 
-<style>
-body {
-text-align: justify}
-</style>
 
 **Disclaimer - The opinions expressed here are solely my own and do not reflect the views of anyone else.**
 
