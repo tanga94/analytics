@@ -8,9 +8,7 @@ header:
   image: 'headers/gdp.jpg'
   focal_point: ""
   preview_only: false
-output: 
-  html_document:
-    css: styles.css
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -20,7 +18,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE,collapse = 
 
 **Disclaimer - The opinions expressed here are solely my own and do not reflect the views of anyone else.**
 
-*The build up to the latest release of South Africa's quarterly GDP figures was captivating to say the least, as analysts eagerly waited to affirm their projections on just how bad the second quarter (Q2) would turn out to be. The catastrophic economic performance recorded over Q2 was largely in line with most expectations, but by all means still managed to dominate headlines across the country. Stats SA indicated that an economic contraction of 51% was recorded over Q2 of this year - but does this really mean that half of South Africa's GDP was wiped out in as little as three months? This article offers some insight into why this number might mislead you to think so.* 
+*The build up to the latest release of South Africa's quarterly GDP figures was captivating to say the least, as analysts eagerly waited to affirm their projections on just how bad the second quarter (Q2) was set to turn out. The catastrophic economic performance recorded over Q2 was largely in line with most expectations, but by all means still managed to dominate headlines across the country. Stats SA indicated that an economic contraction of 51% was recorded over Q2 of this year - but does this really mean that half of South Africa's GDP was wiped out in as little as three months? This article offers some insight into why this number might mislead you to think so.* 
 
 ## What is the difference between annual and annualised growth rates?
 
@@ -34,7 +32,7 @@ There is such a sharp contrast between these two growth rates, so which one prov
 
 
 
-```{r fig1, fig.cap='Annual vs Annualised GDP Growth Rates for South Africa (Q1 2019 - Q2 2020). \\label{Figure1}',fig.width=8,fig.height=6, tidy=FALSE}
+```{r fig1, fig.cap='Annual vs Annualised GDP Growth Rates for South Africa (Q1 2019 - Q2 2020). \\label{Figure1}',fig.width=7.5,fig.height=6, tidy=FALSE}
 library(rmsfuns)
 library(knitr)
 pacman::p_load(tidyverse,lubridate,ggthemes,readxl,tsibble,plotly)
@@ -82,10 +80,10 @@ p1 %>% ggplotly(tooltip = c('Date','Value')) %>%
 
 ## Should we expect production to normalise over the next year?
 
-To answer this question, one needs to understand how production has fared since the gradual reversal of lockdown measures were initiated. An industrial production index can be a useful tool to analyse this, seeing as this indicator is essentially an informal proxy for monthly GDP. The annual growth rate in the economy's manufacturing sector is shown in Figure \@ref(fig:fig2), which indicates that there has been a partial recovery in production since the historic low recorded in April. A smaller annual contraction recorded over July already represents some improvement compared to how the second quarter started out, though it its important to note that production levels remain at substantially lower levels compared to where they were prior to the pandemic's onset.
+To answer this question, one needs to understand how production has fared since the gradual reversal of lockdown measures were initiated. An industrial production index can be a useful tool to analyse this, seeing as this indicator is essentially an informal proxy for monthly GDP. The annual growth rate in the economy's manufacturing sector is shown in Figure \@ref(fig:fig2), which indicates that there has been a partial recovery in production since the historic low recorded in April. A smaller annual contraction recorded over the July already represents some improvement compared to how the second quarter started out, though it its important to note that production levels remain at substantially lower levels compared to where they were prior to the pandemic's onset.
 
 
-```{r fig2, fig.cap='Annual Growth Rates for Monthly Manufacturing Production in South Africa',fig.width=8, tidy=FALSE}
+```{r fig2, fig.cap='Annual Growth Rates for Monthly Manufacturing Production in South Africa',fig.width=7.5, tidy=FALSE}
 library(rmsfuns)
 library(knitr)
 pacman::p_load(tidyverse,lubridate,ggthemes,readxl,tsibble,plotly)
@@ -117,7 +115,7 @@ p1 %>% ggplotly() %>%
   layout(title = list(text = paste0('Industrial Production Index (Manufacturing), South Africa',
                                     '<br>',
                                     '<sup>',
-                                    'Manufacturing production has normalised partially since the historic lows it reached in April.',
+                                    'Manufacturing production has normalised partially since its historic lows reached in April.',
                                     '</sup>'),x=0.07),margin = m) %>% 
   add_annotations(xref='paper',yref='paper',x=1,y=-0.13,text='*Source - Stats SA',showarrow=F,
                   font=list(size=10,color='black'))
@@ -125,7 +123,7 @@ p1 %>% ggplotly() %>%
  
 ```
 
-Purely on the premise that the economy will be coming off such a low base, it is only practical to expect a partial normalisation in growth over the next few months as lockdown measures are eased further. The unfortunate part about this is that the media's reaction when Q3's figures are released in a few months will most likely be as overblown as what we saw earlier this week. We can expect a sharp rise in annualised growth at the end of Q3 due to this "low base effect" from the second quarter, which will create the false impression that South Africa's economic renaissance has taken full effect.
+Purely on the premise that the economy will be coming off the low base created by the destructive events during the second quarter, it is only practical to expect a some improvement in production over the next few months as lockdown measures are eased. The unfortunate part about this is that the media's reaction once the next quarter's figures are released in a few months will most likely be as overblown as what we saw earlier this week. We can expect a sharp rise in annualised growth at the end of Q3 due to this "low base effect" from Q2, which will create the false impression that South Africa's economic renaissance has taken full effect.
 
 Right now, the economy is going through extreme short-term changes. This doesn't mean that the scars from the lockdown period won't remain for years to come - consumption and investment will take some time to fully normalise, and it is unlikely that the job losses induced by the pandemic will be reversed anytime soon either. Additionally, high levels of government debt coupled with depleted tax revenues have left fiscal policymakers with limited buffers to cushion the effects of the shock. With that being said, it makes little sense to suggest that the remainder of the year will resemble anything similar to the unprecedented troughs experienced in Q2. If you share the same sentiment, then you shouldn't focus too much on annualised growth rates this year.
 
