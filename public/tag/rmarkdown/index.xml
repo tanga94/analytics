@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rmarkdown | Tangeni Shatiwa</title>
+    <link>/tag/rmarkdown/</link>
+      <atom:link href="/tag/rmarkdown/index.xml" rel="self" type="application/rss+xml" />
+    <description>rmarkdown</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 02 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>rmarkdown</title>
+      <link>/tag/rmarkdown/</link>
+    </image>
+    
+    <item>
+      <title>How I Taught Tidymodels, Virtually</title>
+      <link>/post/alison/alison/</link>
+      <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>/post/alison/alison/</guid>
+      <description>&lt;p&gt;A few weeks ago, I wrapped up teaching 
+&lt;a href=&#34;https://www.tidymodels.org&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;tidymodels&lt;/a&gt; for the third time. We say third time&amp;rsquo;s the charm, right? Even during a global pandemic? I don&amp;rsquo;t know, but this time around was fun in new ways and hard in new ways, so I wanted to take the time to write some thoughts down about how it went.&lt;/p&gt;
+&lt;h2 id=&#34;but-why&#34;&gt;But why?&lt;/h2&gt;
+&lt;p&gt;Why teach tidymodels virtually? I&amp;rsquo;ve already taught it as a 
+&lt;a href=&#34;/project/tidyml&#34;&gt;2-day workshop&lt;/a&gt; at rstudio::conf(2020). I had already agreed to teach intro to machine learning with tidymodels as a full-day workshop for the Cascadia R Conf (which unfortunately was cancelled due to COVID), and the 
+&lt;a href=&#34;/talk/2020-rmedicine-tidyml/&#34;&gt;R / Medicine conference&lt;/a&gt; (still on, and 100% virtual!).&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

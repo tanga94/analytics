@@ -7,7 +7,6 @@ output: html_document
 header:
   image: "featured.jpg"
   focal_point: "Center"
-  width=200px
   caption: "Image credit: [**Biznews**](https://www.biznews.com/sponsored/2020/05/04/sa-exchange-rate-better-time-invest)"
 ---
 

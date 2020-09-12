@@ -56,7 +56,7 @@ m <- list(
 p1 <- ggplot(dataset, aes(Date, Value, fill = Key)) +
   geom_bar(position='dodge', stat='identity') +
   theme_bw() +
-  labs(y = 'Percent (%)') +
+  labs(y = '%') +
   geom_hline(yintercept = 0, linetype = 'dashed',col = 'red') +
   scale_fill_manual(values = c('#EFBE93','#75002B')) +
   theme(legend.title = element_blank()) +
@@ -104,7 +104,7 @@ p1 <- ggplot(dataset, aes(Date, Value)) +
   geom_line(size = 1.2, col = '#4f042e') +
   theme_bw() +
   geom_hline(yintercept = 0, linetype = 'dashed', col = 'red',size = 1) +
-  labs(y = 'Annual Percentage Change (%)') +
+  labs(y = '%, Annual') +
   scale_x_date(breaks = seq(head(dataset$Date, 1), 
                             tail(dataset$Date, 1),
                             by = '6 months'), date_labels = '%b-%Y') 
