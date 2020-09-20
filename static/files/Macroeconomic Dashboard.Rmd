@@ -1,0 +1,1135 @@
+---
+title: "Macroeconomic Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    logo: bon.png
+---
+<style>
+.navbar, [data-toggle=tab], .navbar-brand  {   background-color:#75002B;   border-color:black;   color:white; }
+
+.navbar-logo img {
+    position: absolute;
+    right: 0px;
+}
+.table-hover > tbody > tr:hover { 
+  background-color: #efcccd;
+}
+tfoot {
+  font-size: 80%;
+}
+</style>
+
+
+```{r setup, include=FALSE}
+
+# Hi, I have coded everything in a dynamic way that you don't have to change anything, just press the 'Knit' button that you can see near the top of your screen and it will update everything based on what's in the excel spreadsheet and data that I've sourced from online sources. 
+
+# It takes about +/- 1min for it to load because there is a lot of code. If it takes more than 1 min or if you see that its giving you an error in the console at the bottom, let me know and I will try to fix the issue.
+
+# Apart from that, I hope you find this useful. I have left comments throughout this template (all comments are after a hashtag) if you ever want to understand what each line means.
+
+
+rm(list = ls()) # This just clears the entire environment so that we can begin
+
+
+source(paste0(getwd(), "/Code/LoadPackages.R")) 
+LoadPackages() # This is just a function I built in that will load all the packages that this thing needs to work.
+
+
+source("Code/LoadDatasets.R", local = knitr::knit_global()) 
+source("Code/LoadReturnsCalcs.R", local = knitr::knit_global())
+# These two lines load two pre-existing code scripts that I have written. They have all the data and calculations for the entire dashboard. You can view them in the 'Code' file in the folder if you want a breakdown of everything
+```
+
+# Commodities
+
+## Column {data-width=400}
+
+### Brent Crude Oil Futures - Continuous Contract
+
+```{r}
+
+# These lines build the plot for Brent Crude Oil Futures 
+p1 <- ggplot(prices, aes(Date,Crude)) +
+      geom_line(col='#75002B', size=1) +
+      scale_x_date(breaks = seq(head(prices$Date, 1), 
+                            todays_date,
+                            by = '2 months'), date_labels = '%b-%Y') +
+      labs(y='US$ per Barrel') +
+      theme_bw()
+
+p1 %>% ggplotly()
+
+```
+
+### Gold Futures - Continuous Contract
+
+```{r}
+# And these lines build the plot for Gold Futures
+p1 <- ggplot(prices, aes(Date,Gold)) +
+      geom_line(col='#75002B', size=1) +
+      scale_x_date(breaks = seq(head(prices$Date, 1), 
+                            todays_date,
+                            by = '2 months'), date_labels = '%b-%Y') +
+      labs(y='US$ per Troy Ounce') +
+      theme_bw()
+
+p1 %>% ggplotly()
+
+```
+
+## Column {data-width=200}
+
+### Brent Crude Oil Price $\small \Delta$ (Month-to-Date)
+
+```{r}
+# This just loads the latest number into the maroon box for the most updated Brent Crude Oil Price Change
+valueBox(paste0(format(return_crude$Return[2]),'%'), color='#75002B', icon='fa-gas-pump')
+```
+
+### Gold Price $\small \Delta$ (Month-to-Date)
+
+```{r}
+# Same as above but for the Gold Price
+valueBox(paste0(format(return_gold$Return[2]),'%'), color='#75002B', icon='fa-coins')
+```
+
+### Wheat Price $\small \Delta$ (Month-to-Date)
+
+```{r}
+# Same as above but for Wheat Price
+valueBox(paste0(format(return_wheat$Return[2]),'%'), color='#75002B', icon='fa-seedling')
+```
+
+### Maize Price $\small \Delta$ (Month-to-Date)
+
+```{r, fig.height=20}
+# Same as above but for the Maize Price
+valueBox(paste0(format(return_maize$Return[2]),'%'), color='#75002B', icon='fa-spa')
+```
+
+
+
+## Column {data-width=400}
+
+### Wheat Futures - Continuous Contract
+
+```{r}
+# And this builds the plot for Wheat Futures
+p1 <- ggplot(prices, aes(Date,Wheat)) +
+      geom_line(col='#75002B', size=1) +
+      scale_x_date(breaks = seq(head(prices$Date, 1), 
+                            todays_date,
+                            by = '2 months'), date_labels = '%b-%Y') +
+      labs(y='US$ Cents per bushel') +
+      theme_bw()
+
+p1 %>% ggplotly()
+
+```
+
+
+### Maize Futures - Continuous Contract
+
+```{r}
+# And this builds a plot for Maize Futures
+p1 <- ggplot(prices, aes(Date,Maize)) +
+      geom_line(col='#75002B', size=1) +
+      scale_x_date(breaks = seq(head(prices$Date, 1), 
+                            todays_date,
+                            by = '2 months'), date_labels = '%b-%Y') +
+      labs(y='US$ Cents per bushel') +
+      theme_bw()
+
+p1 %>% ggplotly() %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=-0.25,text='*Source - Yahoo Finance',showarrow=F,
+                  font=list(size=10,color='black'))
+
+```
+
+# South Africa
+
+
+## Column {data-width=700, .tabset}
+
+
+### Rand Exchange Rates
+
+```{r}
+
+# These lines build a plot for the Rand Exchange Rates
+p1 <- ggplot(currencies, aes(Date,Value, col=Ticker)) +
+      geom_line(size = 1) +
+      theme_bw() +
+      labs(y='ZAR per foreign currency') +
+      theme(legend.title = element_blank()) +
+      scale_colour_manual(values=c('#75002B','#BD215B','#EFBE93')) +
+      scale_x_date(breaks = seq(ymd(Sys.Date()) - years(1),Sys.Date(),by = '3 months'), date_labels = '%b-%Y') +
+      scale_y_continuous(trans='reverse')
+
+p1 %>% ggplotly(tooltip = c('Date','Value')) %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=1.035,text='*Note - An upward movement can be interpreted as a appreciation in Rand terms, and vice versa',showarrow=F,
+                  font=list(size=10,color='black')) %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - South African Reserve Bank',showarrow=F,
+                  font=list(size=10,color='black'))
+
+
+```
+
+
+### SA Consumer Inflation
+
+```{r}
+# And these lines build a plot for SA Inflation 
+p1 <- ggplot(sa_inflation, aes(Date,Rate, col=Key)) +
+      geom_line(size = 1.2) +
+      theme_bw() +
+      labs(y='Annual Inflation Rate (%)') +
+      theme(legend.title = element_blank()) +
+      scale_colour_manual(values=c('#75002B','#EFBE93')) +
+       scale_x_date(breaks = seq(head(sa_inflation$Date, 1), 
+                            tail(sa_inflation$Date, 1),
+                            by = '1 year'), date_labels = '%b-%Y')
+
+
+p1 %>% ggplotly(tooltip = c('Date','Rate')) %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - OECD',showarrow=F,
+                  font=list(size=10,color='black')) %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=1.035,text='*Core Inflation excludes food and energy items in consumer basket',showarrow=F,
+                  font=list(size=10,color='black')) 
+
+
+```
+
+### SA Industrial Production Growth
+
+```{r}
+# These build a plot for SA Industrial Production Growth
+p1 <- ggplot(sa_industrial, aes(Date,Growth)) +
+      geom_line(size = 1.2, col = '#75002B') +
+      theme_bw() +
+      labs(y='Year-on-Year Growth (%)') +
+      theme(legend.title = element_blank()) +
+      geom_hline(yintercept=0, color = "red", linetype = 'dashed') +
+      scale_x_date(breaks = seq(head(sa_industrial$Date, 1), 
+                            tail(sa_industrial$Date, 1),
+                            by = '6 months'), date_labels = '%b-%Y')
+
+p1 %>% ggplotly() %>% 
+      add_annotations(xref='paper',yref='paper',x=1,y=1.035,text='*Industrial Production indices are often used as a monthly proxy for GDP',showarrow=F,
+                  font=list(size=10,color='black')) %>% 
+      add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - South African Reserve Bank',showarrow=F,
+                  font=list(size=10,color='black'))
+
+
+
+```
+
+## Column {data-width=300}
+
+### USD-ZAR $\small \Delta$ (Month-to-Date)
+
+```{r}
+# This just loads the latest number into the maroon box for the most updated USD-ZAR Change
+valueBox(paste0(format(return_usd$Return[2]),'%'), color='#75002B', icon='fa-dollar-sign')
+```
+
+
+### EUR-ZAR $\small \Delta$ (Month-to-Date)
+
+```{r}
+# Same as above, for EUR-ZAR Change
+valueBox(paste0(format(return_euro$Return[2]),'%'), color='#75002B',icon='fa-euro-sign')
+```
+
+
+### GBP-ZAR $\small \Delta$ (Month-to-Date)
+
+```{r}
+# Same as above, for GBP-ZAR Change
+valueBox(paste0(format(return_gbp$Return[2]),'%'), color='#75002B', icon='fa-pound-sign')
+```
+
+
+
+### SA Consumer Inflation (Year-on-Year)
+
+```{r}
+# Same as above, for latest SA Inflation (Year on Year)
+valueBox(paste0(format(annual_inflation_sa$Headline[1]),'%'), color='#75002B', icon='fa-chart-line')
+```
+
+
+
+### SA Industrial Production Growth (Year-on-Year)
+
+```{r}
+# Same as above, for latest SA Industrial Production Growth (Year on Year)
+valueBox(paste0(format(annual_ip_sa$Growth[1]),'%'), color='#75002B', icon='fa-industry')
+```
+
+
+
+# Domestic Inflation
+
+
+
+## Column {data-width=500, .tabset}
+
+
+### Namibia Consumer Inflation
+
+```{r}
+# This just builds a plot for Namibia Inflation
+p1 <- nam_inflation %>%
+      ggplot() +  aes(Date, y = Value, color = name, linetype=name) +
+      geom_line(size = 1.5) + 
+      theme_bw() +
+      labs(y='Annual Inflation Rate (%)',color = "") +
+      scale_color_manual(values = c('#BD215B',"#75002B","#EFBE93"),
+                     labels = c('12 Month Moving MA','Core','Headline')) +
+      scale_linetype_manual(values=c("dashed", "solid", "solid"), guide=FALSE) +
+      scale_x_date(breaks = seq(head(nam_inflation$Date, 1), 
+                            tail(nam_inflation$Date, 1),
+                            by = '6 months'), date_labels = '%b-%Y') +
+      scale_y_continuous(breaks = seq(-50, 50, by = 2)) 
+
+
+p1 %>% ggplotly(tooltip = c('Date','Value')) %>% 
+       layout(legend = list(orientation = "h", x = 0.2, y = 1.1)) %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - Namibia Statistics Agency',showarrow=F,
+                  font=list(size=10,color='black'))
+  
+
+
+```
+
+
+### Slate Account
+
+
+```{r}
+# And this builds a plot for the Slate Account
+
+p1 <- ggplot(slate, aes(Date, Value, fill=Key)) +
+      geom_bar(data = slate %>% filter(Key=='Slate Balance'|Key=='Over/Underrecovery'),position='dodge', stat='identity') +
+      scale_fill_manual(values = c('#75002B','#EFBE93')) +
+      scale_x_date(breaks = seq(head(slate$Date, 1), 
+                            tail(slate$Date, 1),
+                            by = '2 months'), date_labels = '%b-%Y') +
+      scale_y_continuous(breaks = seq(-400, 400, by = 50)) +
+      labs(y='N$ Million') +
+      theme(legend.title = element_blank()) +
+      theme_bw() +
+      geom_hline(yintercept=0, color = "red", linetype = 'dashed')
+
+
+p1 %>% ggplotly(tooltip = c('Date','Value')) %>% 
+       layout(legend = list(orientation = "h", x = 0.25, y = 1.1)) %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - Ministry of Mines and Energy',showarrow=F,
+                  font=list(size=10,color='black'))
+  
+```
+
+
+### Inflation Forecasts (Components Based)
+
+
+```{r}
+# And this builds a plot for Components based forecasts
+level_order <- c('Food','Alcoholic B&T','Clothing','Housing','Furnishings',
+                 'Health','Transport','Communication','Recreation','Education',
+                 'Hotels','Miscellaneous','All items')
+
+p1 <- ggplot(components, aes(x=factor(Component,level=level_order), y = Value, fill=as.factor(Date))) +
+      geom_bar(position='dodge', stat='identity') +
+      scale_fill_manual(values = c('#75002B','#BD215B','#EFBE93')) +
+      geom_hline(yintercept=0, color = "red", linetype = 'dashed') +
+      theme_bw() +
+      theme(legend.title = element_blank(),axis.text.x = element_text(angle=45)) +
+      labs(y='Annual Inflation Rate (%)', x='Component') +
+      scale_y_continuous(breaks = seq(-50, 50, by = 2)) 
+  
+
+p1 %>% ggplotly(tooltip = c('Date','Value')) %>% 
+       layout(legend = list(orientation = "h", x = 0.2, y = 1.1)) %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=-0.25,text='*Source - Bank of Namibia',showarrow=F,
+                  font=list(size=10,color='black'))
+
+
+
+```
+
+
+## Column {data-width=150}
+
+
+
+### Annual Inflation Rate (Latest Month) 
+
+```{r}
+# This puts the latest annual inflation figure into the box that you see
+valueBox(paste0(format(latest_inflation$Value[1]),'%'), color='#75002B', icon='fa-chart-bar')
+```
+
+
+
+### Annual Average Inflation (Year to Date)
+
+```{r}
+# Same as above, but for an average of the current year
+valueBox(paste0(format(domestic_inflation_ann_average$Average[1]),'%'), color='#75002B', icon='fa-chart-line')
+```
+
+
+### Month-on-Month Inflation Rate (Latest Month)
+
+```{r}
+# Same as above, but for month on month inflation
+valueBox(paste0(format(monthly_inflation$Inflation[1]),'%'), color='#75002B', icon='fa-money-bill-alt')
+```
+
+### Petrol Pump Price $\small \Delta$ (Latest Month)
+
+```{r}
+# Same as above, for latest fuel price increase
+valueBox(paste0(pump_price$Change[1], ' cents'), color='#75002B', icon='fa-gas-pump')
+```
+
+
+## Column {data-width=350}
+
+
+
+
+### Short Term Forecast Models
+
+```{r}
+# This just builds a table for short term models
+
+short_forecasts %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c('hover','responsive','striped')) %>% 
+  row_spec(1:4, color = '#75002B', bold = T) %>% 
+  row_spec(c(0,4), underline = T) %>% 
+  row_spec(3, hline_after = T) %>% 
+  row_spec(0, background = '#75002B', color='white', bold=T) %>% 
+  footnote(general = c("*Short-term models provide forecasts over a 3 month horizon.",'*Consensus Model represents an average of the ARIMA, Adjusted and STIF Models.'))
+
+```
+
+
+
+### Medium Term Forecast Models
+
+
+```{r}
+# This builds a table for medium term models
+ 
+medium_forecasts %>% 
+  kable() %>% 
+  kable_styling(bootstrap_options = c('hover','responsive','striped')) %>% 
+  row_spec(0, underline = T) %>% 
+  row_spec(1:12, color = '#75002B', bold=T) %>% 
+  row_spec(0, background = '#75002B', color='white', bold=T) %>% 
+  footnote(general = c("*Medium-term models provide forecasts over a 3 year horizon (each period is a quarterly average).",'*Alternative Scenario assesses pass-through risks associated with exchange rate depreciation and fuel price increases on inflation.'))
+
+```
+
+
+
+# Domestic PSCE
+
+
+
+## Column {data-width=400, .tabset}
+
+
+
+### Total PSCE Growth
+
+
+
+```{r}
+# This just builds a plot for total PSCE Growth
+
+p1 <- ggplot(psce_data, aes(Date, `PSCE Growth`)) +
+      geom_rect(aes(xmin = head(tail(Date, 6), 1),
+                xmax = tail(Date, 1),
+                ymin = 0, ymax = 10), 
+            fill = "red", alpha = 0.2) +
+      geom_line(size = 1.2, col = '#75002B') +
+      scale_x_date(breaks = seq(head(psce_data$Date, 1), 
+                            tail(psce_data$Date, 1),
+                            by = '6 months'), date_labels = '%b-%Y') +
+      labs(y = 'Year-on-Year Growth (%)') +
+      scale_y_continuous(breaks = seq(0, 10, by = 2)) +
+      theme_bw()
+
+
+p1 %>% ggplotly() %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=1.035,text='*Shaded area denotes 6-month forecast horizon',showarrow=F,
+                 font=list(size=10,color='black')) %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - Bank of Namibia',showarrow=F,
+                  font=list(size=10,color='black'))
+
+ 
+```
+
+### Credit to Individuals
+
+```{r}
+
+# This just builds a plot for Credit to Indivduals
+p1 <- ggplot(psce_data, aes(Date,`Household PSCE`)) +
+      geom_ribbon(aes(ymin = min(`Household PSCE`), ymax = `Household PSCE`), fill='#75002B',alpha = .9,col='maroon', size=1) +
+      scale_x_date(breaks = seq(head(psce_data$Date, 1), 
+                            tail(psce_data$Date, 1),
+                            by = '6 months'), date_labels = '%b-%Y') +
+      labs(y = 'N$ Million') +
+      theme_bw() 
+
+
+p1 %>% ggplotly(tooltip = c('Date','Household PSCE')) %>% 
+       layout(legend = list(orientation = "v",   
+                     yanchor = "center",  
+                     y = 0.5)) %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=1.035,text='*Final 6 months are a forecast',showarrow=F,
+                 font=list(size=10,color='black')) %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - Bank of Namibia',showarrow=F,
+                  font=list(size=10,color='black'))
+
+
+
+```
+
+
+### Credit to Businesses 
+
+```{r}
+# This just builds a plot for credit to businesses
+
+
+p1 <- ggplot(psce_data, aes(Date,`Business PSCE`)) +
+      geom_ribbon(aes(ymin = min(`Business PSCE`), ymax = `Business PSCE`), fill='#75002B',alpha = .9,col='maroon', size=1) +
+      scale_x_date(breaks = seq(head(psce_data$Date, 1), 
+                            tail(psce_data$Date, 1),
+                            by = '6 months'), date_labels = '%b-%Y') +
+      labs(y = 'N$ Million') +
+      theme_bw() 
+
+
+p1 %>% ggplotly(tooltip = c('Date','Business PSCE')) %>% 
+       layout(legend = list(orientation = "v",   
+                     yanchor = "center", 
+                     y = 0.5)) %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=1.035,text='*Final 6 months are a forecast',showarrow=F,
+                 font=list(size=10,color='black')) %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - Bank of Namibia',showarrow=F,
+                  font=list(size=10,color='black'))
+
+
+
+```
+
+
+
+## Column {data-width=200}
+
+### PSCE % $\small \Delta$ (Year-on-Year) 
+
+```{r}
+# This puts the latest PSCE growth number into the box
+valueBox(paste0(format(psce_annual_growth$Growth[1]),'%'), color='#75002B', icon='fa-chart-bar')
+```
+
+### PSCE % $\small \Delta$ (Annual Average for Current Year)
+
+```{r}
+# This puts the latest PSCE Annual Average growth number into the box
+valueBox(paste0(format(average_psce$Average[1]),'%'), color='#75002B', icon='fa-credit-card')
+```
+
+### Business Credit % $\small \Delta$ (Annual Average for Current Year)
+
+```{r}
+# Same as above, for business credit
+valueBox(paste0(format(average_business$Average[1]),'%'), color='#75002B', icon='fa-briefcase')
+```
+
+### Household Credit % $\small \Delta$ (Annual Average for Current Year)
+
+```{r}
+# Same as above, for Household Credit 
+valueBox(paste0(format(average_hh$Average[1]),'%'), color='#75002B', icon='fa-home')
+```
+
+
+
+## Column {data-width=400, .tabset}
+
+
+### Credit forecasts by borrower groups
+
+```{r, fig.height=7}
+# This just builds a plot for PSCE forecasts by borrower groups
+barplot1 <- credit %>% 
+            select(Date:Households) %>% 
+            mutate(Date = as.Date(Date)) %>% 
+            slice(tail(row_number(), 3)) %>% 
+            gather(Type, Value, -Date)
+
+p1 <- ggplot(barplot1, aes(x=Date,y=Value,fill=Type)) +
+      geom_bar(position='dodge', stat='identity') +
+      theme(legend.title = element_blank()) +
+      scale_fill_manual(values = c('#75002B','#BD215B','#EFBE93')) +
+      theme_bw() +
+      labs(y = 'Year-on-Year Growth (%)') +
+      theme(legend.title = element_blank()) +
+      geom_hline(yintercept=0, color = "black") +
+      scale_x_date(date_labels = '%b-%Y') +
+      scale_y_continuous(breaks = seq(-50,50,by=2))
+
+p1 %>% ggplotly() %>% 
+  add_annotations(xref='paper',yref='paper',x=1,y=-0.10,text='*Source - Bank of Namibia',showarrow=F,
+                  font=list(size=10,color='black')) %>% 
+  layout(legend = list(orientation = "h", x = 0.125, y = 1.1))
+```
+
+### Credit forecasts by borrowing type
+
+```{r, fig.height=7}
+# This just builds a plot for PSCE by borrowing type
+barplot2 <- credit %>% 
+            select(Date,`Mortgage Credit`:`Overdrafts`) %>% 
+            mutate(Date = as.Date(Date)) %>% 
+            slice(tail(row_number(), 3)) %>% 
+            gather(Type,Value,-Date)
+
+
+p1 <- ggplot(barplot2, aes(x=Date,y=Value,fill=Type)) +
+      geom_bar(position='dodge', stat='identity') +
+      labs(y='Year-on-Year growth (%)') +
+      scale_x_date(date_labels = '%b-%Y') +
+      theme_bw() +
+      scale_fill_manual(values = c('#75002B','#BD215B','#EFBE93','#c7af76')) +
+      geom_hline(yintercept=0, color = "black") +
+      theme(legend.title = element_blank(), legend.position = 'bottom') +
+      scale_y_continuous(breaks = seq(-50,50,by=2))
+
+
+p1 %>% ggplotly() %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=-0.10,text='*Source - Bank of Namibia',showarrow=F,
+                  font=list(size=10,color='black')) %>% 
+       layout(legend = list(orientation = "h", x = 0.2, y = 1.15))
+
+```
+
+
+# BoP
+
+
+## Column {data-width=700, .tabset}
+
+
+### Trade Balance 
+
+```{r}
+
+tb <- bop %>% 
+  select(Year,`Trade Balance`) %>% 
+  rename(Value = `Trade Balance`)
+
+
+p1 <- ggplot(tb, aes(Year, Value)) +
+  geom_bar(stat = 'identity', fill = '#75002B') +
+  theme_bw() +
+  labs(y = '% of GDP') +
+  geom_hline(yintercept = 0, col = 'red',size = 1, linetype = 'dashed')
+
+p1 %>% ggplotly(tooltip = c('Year', 'Value')) %>% 
+  add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - Bank of Namibia',showarrow=F,
+                  font=list(size=10,color='black')) %>% 
+  add_annotations(xref='paper',yref='paper',x=1,y=1.035,text='*Final 2 years are a forecast',showarrow=F,
+                  font=list(size=10,color='black'))
+
+
+
+
+```
+
+
+### Current Account 
+
+
+```{r}
+
+ca <- bop %>% 
+  select(Year,`Current Account Balance`) %>% 
+  rename(Value = `Current Account Balance`)
+
+p1 <- ggplot(ca, aes(Year, Value)) +
+  geom_bar(stat = 'identity', fill = '#75002B') +
+  theme_bw() +
+  labs(y = '% of GDP') +
+  geom_hline(yintercept = 0, col = 'red',size = 1, linetype = 'dashed')
+
+p1 %>% ggplotly(tooltip = c('Year', 'Value')) %>% 
+  add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - Bank of Namibia',showarrow=F,
+                  font=list(size=10,color='black')) %>% 
+  add_annotations(xref='paper',yref='paper',x=1,y=1.035,text='*Final 2 years are a forecast',showarrow=F,
+                  font=list(size=10,color='black'))
+
+
+
+```
+
+
+
+### Import Cover
+
+```{r}
+
+ic <- bop %>% 
+  select(Year,`Import Cover`) %>% 
+  rename(Value = `Import Cover`)
+
+
+p1 <- ggplot(ic, aes(Year, Value)) +
+  geom_bar(stat = 'identity', fill = '#75002B') +
+  theme_bw() +
+  labs(y = 'Months')
+
+p1 %>% ggplotly(tooltip = c('Year', 'Value')) %>% 
+  add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - Bank of Namibia',showarrow=F,
+                  font=list(size=10,color='black')) %>% 
+  add_annotations(xref='paper',yref='paper',x=1,y=1.035,text='*Final 2 years are a forecast',showarrow=F,
+                  font=list(size=10,color='black'))
+
+
+
+
+```
+
+
+### NEER-REER
+
+
+```{r}
+# This just builds a plot for NEER & REER
+
+p1 <- ggplot(neer_reer, aes(Date, Value, col = Key)) +
+  geom_line(size = 1.2) +
+  scale_x_date(breaks = seq(head(neer_reer$Date, 1), 
+                            tail(neer_reer$Date, 1),
+                            by = '1 year'), date_labels = '%b-%Y') +
+  scale_y_continuous(breaks = seq(80,120, by = 5)) +
+  labs(y = 'Index (2015=100)') +
+  scale_color_manual(values = c('#75002B','#EFBE93')) +
+  theme_bw() +
+  theme(legend.title = element_blank()) 
+    
+p1 %>% ggplotly(tooltip = c('Date','Value')) %>% 
+  layout(legend = list(orientation = "h", x = 0.4, y = 1.1)) %>% 
+  add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - Bank of Namibia',showarrow=F,
+                  font=list(size=10,color='black'))
+
+  
+
+
+```
+
+
+
+## Column {data-width=300}
+
+
+### Trade Balance (% of GDP, Current Year)
+
+```{r}
+# This puts the latest PSCE growth number into the box
+valueBox(paste0(format(bop_change$`Trade Balance`[1]),'%'), color='#75002B', icon='fa-balance-scale')
+```
+
+### Current Account Balance (% of GDP, Current Year)
+
+```{r}
+# This puts the latest PSCE Annual Average growth number into the box
+valueBox(paste0(format(bop_change$`Current Account Balance`[1]),'%'), color='#75002B', icon='fa-balance-scale')
+```
+
+### Import Cover (Current Year)
+
+```{r}
+# Same as above, for business credit
+valueBox(paste0(format(bop_change$`Import Cover`[1]),' Months'), color='#75002B', icon='fa-people-carry')
+```
+
+### Month-on-Month % $\small \Delta$ in NEER (Latest Month)
+
+```{r}
+# Same as above, for Household Credit 
+valueBox(paste0(format(neer_reer_change$`NEER`[1]),'%'), color='#75002B', icon='fa-home')
+```
+
+
+### Month-on-Month % $\small \Delta$ in REER (Latest Month)
+
+```{r}
+# Same as above, for Household Credit 
+valueBox(paste0(format(neer_reer_change$`REER`[1]),'%'), color='#75002B', icon='fa-home')
+
+```
+
+
+
+
+
+# Financial Stability
+
+
+## Column {data-width=700, .tabset}
+
+
+
+### Financial Stability Index
+
+
+```{r}
+
+p1 <- ggplot(fs, aes(Date, Value)) +
+  geom_line(size = 1.2, col = '#75002B') +
+  labs(y = 'Index Value') +
+  theme_bw() +
+  scale_x_date(breaks = seq(head(fs$Date, 1), 
+                            todays_date,
+                            by = '6 months'), date_labels = '%b-%Y') +
+  geom_hline(yintercept = 0, col = 'red',size = 1, linetype = 'dashed')
+
+
+
+p1 %>% ggplotly(tooltip=c('Date','Value')) %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - Bank of Namibia',showarrow=F,
+                  font=list(size=10,color='black'))
+
+
+```
+
+
+### VIX
+
+
+```{r}
+
+p1 <- ggplot(vix, aes(Date, Value)) +
+  geom_line(size = 1.2, col = "#75002B") +
+  scale_y_continuous(breaks = seq(0,150, by = 20)) +
+  scale_x_date(breaks = seq(head(vix$Date, 1), 
+                            todays_date,
+                            by = '3 months'), date_labels = '%b-%Y') +
+  theme_bw() +
+  labs(y = 'Index Value')
+
+
+
+p1 %>% ggplotly() %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - Quandl',showarrow=F,
+                  font=list(size=10,color='black'))
+
+
+
+```
+
+
+
+### House Price Index
+
+```{r}
+
+p1 <- ggplot(hp_index, aes(Date,Value, col = Key)) +
+  geom_line(data=filter(hp_index, Key=='Index'), size = 1.2) +
+  geom_line(data=filter(hp_index, Key=='12 Month MA'), linetype = 'dashed', size = 1.5) +
+  scale_color_manual(values = c('#BD215B',"#75002B")) +
+  theme_bw() +
+  geom_hline(yintercept = 0, linetype = 'dashed', size = 1, col = 'red') +
+  scale_x_date(breaks = seq(head(hp_index$Date, 1), 
+                          todays_date,
+                          by = '6 months'), date_labels = '%b-%Y') +
+  theme(legend.title = element_blank()) +
+  labs(y = 'Year-on-Year Growth (%)')
+  
+  
+
+p1 %>% ggplotly(tooltip = c('Date','Value')) %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - First National Bank',showarrow=F,
+                  font=list(size=10,color='black')) %>% 
+       layout(legend = list(orientation = "h", x = 0.35, y = 1.1))
+
+
+
+
+
+```
+
+
+
+### Non-Performing Loans
+
+
+```{r}
+
+
+p1 <- ggplot(npl, aes(Date, Value)) +
+  geom_line(size = 1.2, col = "#75002B") +
+  theme_bw() +
+  labs(y = 'NPL Ratio (%)') +
+  scale_x_date(breaks = seq(head(npl$Date, 1), 
+                            tail(npl$Date, 1),
+                            by = '6 months'), date_labels = '%b-%Y')
+
+
+
+p1 %>% ggplotly(tooltip = c('Date', 'Value')) %>% 
+  add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - Bank of Namibia',showarrow=F,
+                  font=list(size=10,color='black')) %>% 
+  add_annotations(xref='paper',yref='paper',x=1,y=1.035,text='*Quarterly Values',showarrow=F,
+                  font=list(size=10,color='black'))
+
+
+
+```
+
+
+
+## Column {data-width=300}
+
+
+### Financial Stability Index (Latest Quarter)
+
+```{r}
+valueBox(paste0(format(return_fs$Value[1])), color='#75002B', icon='fa-money-check-alt')
+```
+
+### VIX % $\small \Delta$ (Month-to-Date)
+
+```{r}
+
+valueBox(paste0(format(return_vix$Return[2]),'%'), color='#75002B', icon='fa-chart-bar')
+```
+
+### House Price Index % $\small \Delta$ (Year-on-Year, Latest Month)
+
+```{r}
+
+valueBox(paste0(format(return_hp$Value[1]),'%'), color='#75002B', icon='fa-home')
+```
+
+### NPL Ratio (Latest Quarter)
+
+```{r}
+valueBox(paste0(format(return_npl$Value[1]),'%'), color='#75002B', icon='fa-percent')
+```
+
+
+
+
+# Economic Growth
+
+
+## Column {data-width=700, .tabset}
+
+
+
+### Quarterly Real GDP 
+
+```{r}
+
+p1 <- ggplot(quarterly_gdp, aes(Date, `Value`)) +
+  geom_line(size = 1.2, col = '#75002B') +
+  theme_bw() +
+  labs(y = 'Year-on-Year Growth (%)') +
+  geom_hline(col = 'red',size = 1,yintercept = 0,linetype = 'dashed')
+
+p1 %>% ggplotly(tooltop = c("Date","Value")) %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - NSA',showarrow=F,
+                  font=list(size=10,color='black'))
+  
+```
+
+
+
+
+### Annual Growth Forecasts
+
+
+```{r}
+
+p1 <- ggplot(annual_gdp, aes(Year, Value, fill=Key)) +
+  geom_bar(position='dodge', stat='identity') +
+  scale_fill_manual(values = c('#75002B','#EFBE93')) +
+  theme_bw() +
+  theme(legend.title = element_blank()) +
+  labs(y = 'Annual Growth (%)') +
+  geom_hline(yintercept=0, color = "red", linetype = 'dashed', size = 1)
+
+
+
+p1 %>% ggplotly(tooltip = c('Year','Value')) %>% 
+       layout(legend = list(orientation = "h", x = 0.35, y = 1.1)) %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - Bank of Namibia',showarrow=F,
+                  font=list(size=10,color='black'))
+
+```
+
+
+
+### Output Gap 
+
+```{r}
+
+p1 <- ggplot(output_gap, aes(Year, Value)) +
+  geom_bar(stat='identity', fill = '#75002B') +
+  theme_bw() +
+  labs(y = '%') +
+  geom_hline(yintercept=0, color = "red", linetype = 'dashed', size = 1) +
+  scale_x_continuous(breaks = seq(min(output_gap$Year),max(output_gap$Year),by = 1))
+
+p1 %>% ggplotly() %>% 
+       add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - Bank of Namibia',showarrow=F,
+                  font=list(size=10,color='black'))
+
+
+
+```
+
+
+## Column {data-width=300}
+
+
+### Quarterly GDP Growth (Latest Quarter)
+
+```{r}
+valueBox(paste0(format(latest_quarterly_gdp$Value[1]), '%'), color='#75002B', icon='fa-people-carry')
+```
+
+### Annual GDP Growth Forecast (Current Year)
+
+```{r}
+
+valueBox(paste0(format(current_annual_forecast$`Baseline (%)`[1]),'%'), color='#75002B', icon='fa-chart-line')
+```
+
+
+
+### Output Gap Forecast (Current Year)
+
+```{r}
+
+valueBox(paste0(format(current_output_gap$Value[1]),'%'), color='#75002B', icon='fa-arrows-alt-h')
+```
+
+### Annual GDP Growth Forecast (Baseline, Next Year)
+
+```{r}
+valueBox(paste0(format(annual_growth_forecasts$`Baseline (%)`[1]),'%'), color='#75002B', icon='fa-arrow-circle-up')
+```
+
+
+### Annual GDP Growth Forecast (Worst Case, Next Year)
+
+```{r}
+valueBox(paste0(format(annual_growth_forecasts$`Worst Case (%)`[1]),'%'), color='#75002B', icon='fa-arrow-circle-down')
+```
+
+
+
+
+
+# Fiscal Outlook
+
+
+## Column {data-width=700, .tabset}
+
+
+
+### Debt Sustainability Analysis Projections
+
+```{r}
+
+p1 <- ggplot(dsa, aes(x=Year,y=Value,fill=Key)) +
+  geom_bar(position='dodge', stat='identity') +
+  scale_fill_manual(values = c('#75002B','#EFBE93')) +
+  theme_bw() +
+  labs(y='% of GDP') +
+  scale_x_continuous(breaks = seq(min(dsa$Year),max(dsa$Year),by = 1)) +
+  theme(legend.title = element_blank()) 
+
+
+p1 %>% ggplotly(tooltip = c('Year','Value')) %>% 
+  add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - Bank of Namibia',showarrow=F,
+                  font=list(size=10,color='black')) %>% 
+  layout(legend = list(orientation = "h", x = 0.2, y = 1.15))
+
+```
+
+
+
+### Fiscal Stance
+
+
+```{r}
+
+
+p1 <- ggplot(fiscal_stance, aes(x=Year,y=Value,fill=Key)) +
+  geom_bar(position='dodge', stat='identity') +
+  scale_fill_manual(values = c('#75002B','#BD215B','#EFBE93')) +
+  theme_bw() +
+  labs(y='% of GDP') +
+  scale_x_continuous(breaks = seq(min(fiscal_stance$Year),max(fiscal_stance$Year),by = 1)) +
+  geom_hline(yintercept = 0, col = 'red',size = 1, linetype = 'dashed') +
+  theme(legend.title = element_blank()) 
+
+
+p1 %>% ggplotly(tooltip = c('Year','Value')) %>% 
+  add_annotations(xref='paper',yref='paper',x=1,y=-0.09,text='*Source - Bank of Namibia',showarrow=F,
+                  font=list(size=10,color='black')) %>% 
+  layout(legend = list(orientation = "h", x = 0.2, y = 1.15))
+
+```
+
+
+
+## Column {data-width=300}
+
+
+### Gross Financing Requirements (Current Year)
+
+```{r}
+valueBox(paste0(format(current_dsa$Value[1]), '%'), color='#75002B', icon='fa-hand-holding-usd')
+```
+
+
+### Nominal Gross Public Debt (Current Year)
+
+```{r}
+valueBox(paste0(format(current_dsa$Value[2]), '%'), color='#75002B', icon='fa-money-bill-alt')
+```
+
+
+### Primary Balance (Current Year)
+
+
+```{r}
+valueBox(paste0(format(current_fiscalstance$Value[1]), '%'), color='#75002B', icon='fa-percent')
+```
+
+### Cyclically Adjusted Primary Balance (Current Year)
+
+```{r}
+valueBox(paste0(format(current_fiscalstance$Value[2]), '%'), color='#75002B', icon='fa-percent')
+```
+
+
+

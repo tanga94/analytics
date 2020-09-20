@@ -16,13 +16,18 @@
   
 [[main]]
   name = "CV"
-  url = "https://drive.google.com/file/d/1v3gsC8G4fmGUpfYHDDDGJZNYv7ovLlWo/view"
+  url = "files/cv.pdf"
   weight = 40
+
+[[main]]
+  name = "Dashboard"
+  url = "files/Dashboard Manual.pdf"
+  weight = 50
 
 [[main]]
   name = "Contact"
   url = "#contact"
-  weight = 50
+  weight = 60
   
 
 # Link to a PDF of your resume/CV from the menu.
