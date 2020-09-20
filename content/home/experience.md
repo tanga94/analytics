@@ -18,7 +18,7 @@ date_format = "Jan 2006"
 #   Leave `date_end` empty if it's your current employer.
 #   Begin/end multi-line descriptions with 3 quotes `"""`.
 [[experience]]
-  title = "Economic Analyst"
+  title = "Analyst"
   company = "Central Bank of Namibia"
   company_url = ""
   location = "Windhoek"
@@ -57,7 +57,7 @@ date_format = "Jan 2006"
   company_url = ""
   location = "Windhoek and Nairobi"
   date_start = "2017-12-01"
-  date_end = "2018-05-31"
+  date_end = "2018-12-31"
   description = """
   Responsibilities include:
   

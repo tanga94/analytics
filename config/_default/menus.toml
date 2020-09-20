@@ -19,15 +19,11 @@
   url = "files/cv.pdf"
   weight = 40
 
-[[main]]
-  name = "Dashboard"
-  url = "files/Dashboard Manual.pdf"
-  weight = 50
 
 [[main]]
   name = "Contact"
   url = "#contact"
-  weight = 60
+  weight = 50
   
 
 # Link to a PDF of your resume/CV from the menu.
