@@ -53,4 +53,4 @@ user_groups:
 - Visitors
 ---
 
-I am a passionate Analyst with an out-of-the-box mindset and hunger for growth. My career interests and experience are primarily focused on macroeconomics, corporate finance, quantitative finance and financial research. I am committed to unlocking as much value as possible across emerging markets and developing markets in Africa. I'm also an avid fan of sports, socializing and travel in my spare time.
+I'm a passionate Financial Economist working to better understand how macro trends influence capital markets and trade dynamics around the world. My fields of expertise include Macroeconomic & Thematic Research, Forecasting & Modelling, Financial Analysis and Data Visualisation. I thoroughly enjoys generating new ideas and devising feasible solutions to broadly relevant problems. I'm also an avid fan of sports, winetasting, politics and travel in my spare time.
